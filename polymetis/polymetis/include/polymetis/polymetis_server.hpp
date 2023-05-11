@@ -164,6 +164,7 @@ private:
   std::vector<char>
       updates_model_buffer_; // buffer for loading controller update params
   int num_dofs_;
+  bool busy_;
   long int threshold_ns_ = THRESHOLD_NS;
 
   std::mutex service_mtx_;
