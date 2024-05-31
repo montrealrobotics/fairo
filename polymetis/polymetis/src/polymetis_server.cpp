@@ -147,7 +147,7 @@ PolymetisControllerServerImpl::ControlUpdate(ServerContext *context,
                                              const RobotState *robot_state,
                                              TorqueCommand *torque_command) {
   // Check if last update is stale
-  if (!validRobotContext()) {
+  if (!validRobotContext() && !busy_) {
     spdlog::warn("Interrupted control update greater than threshold of {} ns. "
                  "Reverting to default controller...",
                  threshold_ns_);
@@ -241,6 +241,7 @@ Status PolymetisControllerServerImpl::SetController(
 
   int orig_prio = setThreadPriority(RT_LOW_PRIO);
 
+  busy_ = true;
   interval->set_start(-1);
   interval->set_end(-1);
 
@@ -287,6 +288,7 @@ Status PolymetisControllerServerImpl::SetController(
   }
   interval->set_start(custom_controller_context_.episode_begin);
 
+  busy_ = false;
   setThreadPriority(orig_prio);
   return Status::OK;
 }
