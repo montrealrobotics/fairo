@@ -14,8 +14,8 @@ LIBFRANKA_PATH="$GIT_ROOT/polymetis/polymetis/src/clients/franka_panda_client/th
 
 # Update libfranka version & submodules
 cd $LIBFRANKA_PATH
-if [ ! -z "$LIBFRANKA_VER" ]; then git checkout $LIBFRANKA_VER; fi
 git submodule update --init --recursive
+if [ ! -z "$LIBFRANKA_VER" ]; then git checkout $LIBFRANKA_VER; fi
 cd -
 
 # Build
